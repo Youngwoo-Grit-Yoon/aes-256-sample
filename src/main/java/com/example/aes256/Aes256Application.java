@@ -17,9 +17,13 @@ public class Aes256Application {
 	@Bean
 	public CommandLineRunner run() {
 		return (args) -> {
-			String encryptedText = Aes256.encrypt(Aes256.padString("01080036455"));
+			String plainText = "01080036455";
+			String paddedPlainText = Aes256.padString(plainText);
+			String encryptedText = Aes256.encrypt(paddedPlainText);
 			System.out.println(MessageFormat.format("""
-					암호문 : {0}""", encryptedText));
+					평문 : {0}
+					패딩 값이 추가된 평문 : {1}
+					암호문 : {2}""", plainText, paddedPlainText, encryptedText));
 
 			String decryptedText = Aes256.decrypt(encryptedText);
 			System.out.println(MessageFormat.format("""
