@@ -1,7 +1,9 @@
 package com.example.aes256;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -17,14 +19,20 @@ import java.util.Base64;
 public class Aes256Application {
 	private static final String KEY = "4F8ABBD4EE68E655F42146E87D6E4022";
 	private static final String AES_ALGORITHM = "AES";
-	private static final String AES_MODE = "AES/ECB/PKCS5Padding";
+	private static final String AES_MODE = "AES/ECB/NoPadding";
 
-	public static void main(String[] args) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public static void main(String[] args) {
 		SpringApplication.run(Aes256Application.class, args);
-		System.out.println(decrypt(encrypt("01080036455")));
 	}
 
-	public static String encrypt(String plainText) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	@Bean
+	public CommandLineRunner run() {
+		return (args) -> {
+
+		};
+	}
+
+	String encrypt(String plainText) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(), AES_ALGORITHM);
 		Cipher cipher = Cipher.getInstance(AES_MODE);
 
@@ -35,7 +43,7 @@ public class Aes256Application {
 		return Base64.getEncoder().encodeToString(encryptedBytes);
 	}
 
-	public static String decrypt(String encryptedText) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	String decrypt(String encryptedText) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		SecretKeySpec secretKeySpec = new SecretKeySpec(KEY.getBytes(), AES_ALGORITHM);
 		Cipher cipher = Cipher.getInstance(AES_MODE);
 
