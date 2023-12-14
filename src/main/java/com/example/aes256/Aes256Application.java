@@ -28,7 +28,7 @@ public class Aes256Application {
 	@Bean
 	public CommandLineRunner run() {
 		return (args) -> {
-
+			System.out.println(encrypt(padString("01064959971")));
 		};
 	}
 
@@ -60,4 +60,8 @@ public class Aes256Application {
 		return new String(resultBytes);
 	}
 
+	String padString(String input) {
+		int paddingLength = 16 - input.length() % 16;
+		return input + "\0".repeat(paddingLength);
+	}
 }
