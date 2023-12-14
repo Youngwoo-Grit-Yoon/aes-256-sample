@@ -12,6 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -28,7 +29,13 @@ public class Aes256Application {
 	@Bean
 	public CommandLineRunner run() {
 		return (args) -> {
-			System.out.println(encrypt(padString("01064959971")));
+			String encryptedText = encrypt(padString("01080036455"));
+			System.out.println(MessageFormat.format("""
+					암호문 : {0}""", encryptedText));
+
+			String decryptedText = decrypt(encryptedText);
+			System.out.println(MessageFormat.format("""
+					복호문 : {0}""", decryptedText));
 		};
 	}
 
